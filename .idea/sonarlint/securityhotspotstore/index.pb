@@ -9,3 +9,11 @@ S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 Å
 Q.idea/sonarlint/securityhotspotstore/f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164,9\b\9b9af03329b517cdd460b1ee115f2bb0ec341883
+s
+Capp/src/main/java/br/com/alura/panucci/ui/screens/MenuListScreen.kt,1\0\10ccb0aa6f43c15157bcb891cf615692a470d42f
+o
+?app/src/main/java/br/com/alura/panucci/sampledata/SampleData.kt,b\9\b9f9a3db81c86867c4e2e4df8a46aab0a1c0eb0d
+{
+Kapp/src/main/java/br/com/alura/panucci/ui/components/PanucciBottomAppBar.kt,6\8\683d22a67bb26f401ecf9b26b43db36a62760342
+f
+6app/src/main/java/br/com/alura/panucci/MainActivity.kt,a\0\a0d897ecb31f3f7ed02cae343ec3eb2d78437dd0

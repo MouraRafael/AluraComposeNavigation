@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.alura.panucci.sampledata.bottomAppBarItems
 import br.com.alura.panucci.sampledata.sampleProducts
@@ -23,7 +24,6 @@ import br.com.alura.panucci.ui.components.BottomAppBarItem
 import br.com.alura.panucci.ui.components.PanucciBottomAppBar
 import br.com.alura.panucci.ui.screens.*
 import br.com.alura.panucci.ui.theme.PanucciTheme
-import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
 
@@ -31,6 +31,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val currentBackStackEntryState by navController.currentBackStackEntryAsState()
+            val currentDestination = currentBackStackEntryState?.destination
 
             val initialScreen = "Destaques"
             val screens = remember {
@@ -47,23 +49,27 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var selectedItem by remember {
-                        val item = bottomAppBarItems.first()
+                    val selectedItem by remember(currentDestination) {
+                        val item = currentDestination?.let {destination ->
+
+                            bottomAppBarItems.find { it.route == destination.route }
+                        }?:bottomAppBarItems.first()
+
                         mutableStateOf(item)
                     }
                     PanucciApp(
                         bottomAppBarItemSelected = selectedItem,
                         onBottomAppBarItemSelectedChange = {
-                            selectedItem = it
+
                             navController.navigate(it.route)
                         },
                         onFabClick = {
                             screens.add("Pedido")
                         }) {
-                        NavHost(navController = navController, startDestination = "highlights" ){
-                            composable("highlights"){HighlightsListScreen(products = sampleProducts)}
-                            composable("menu"){ MenuListScreen(products = sampleProducts) }
-                            composable("drinks"){ DrinksListScreen(products = sampleProducts) }
+                        NavHost(navController = navController, startDestination = "highlights") {
+                            composable("highlights") { HighlightsListScreen(products = sampleProducts) }
+                            composable("menu") { MenuListScreen(products = sampleProducts) }
+                            composable("drinks") { DrinksListScreen(products = sampleProducts) }
                         }
                     }
                 }
