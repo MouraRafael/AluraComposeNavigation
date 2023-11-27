@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,6 +34,11 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val currentBackStackEntryState by navController.currentBackStackEntryAsState()
             val currentDestination = currentBackStackEntryState?.destination
+
+            navController.addOnDestinationChangedListener{ _, _, _ ->
+                val routes = navController.backQueue.map { it.destination.route }
+                println(routes)
+            }
 
             val initialScreen = "Destaques"
             val screens = remember {
