@@ -57,16 +57,57 @@ class MainActivity : ComponentActivity() {
 
                             navController.navigate(it.route){
                                 launchSingleTop=true
-                                popUpTo(it.route)
+                                //popUpTo(it.route)
                             }
                         },
                         onFabClick = {
-
+                            navController.navigate("checkout")
                         }) {
                         NavHost(navController = navController, startDestination = "highlights") {
-                            composable("highlights") { HighlightsListScreen(products = sampleProducts) }
-                            composable("menu") { MenuListScreen(products = sampleProducts) }
-                            composable("drinks") { DrinksListScreen(products = sampleProducts) }
+                            composable("highlights") {
+                                HighlightsListScreen(
+                                    products = sampleProducts,
+                                    onNavigateToDetails = {
+                                        navController.navigate("productDetails")
+                                    },
+                                    onNavigateToCheckout = {
+                                        navController.navigate("checkout")
+                                    },
+
+                                )
+                            }
+                            composable("menu") {
+                                MenuListScreen(
+                                    products = sampleProducts,
+                                    onNavigateToDetails = {
+                                        navController.navigate("productDetails")
+                                    }
+                                )
+                            }
+                            composable("drinks") {
+                                DrinksListScreen(
+                                    products = sampleProducts,
+                                    onNavigateToDetails={
+                                        navController.navigate("productDetails")
+                                    }
+                                )
+                            }
+
+                            composable("productDetails"){
+                                ProductDetailsScreen(
+                                    product = sampleProducts.random(),
+                                    onNavigateToCheckout = {
+                                        navController.navigate("checkout")
+                                    }
+
+
+                                )
+                            }
+                            composable("checkout"){
+                                CheckoutScreen(
+                                    products = sampleProducts
+                                )
+                            }
                         }
                     }
                 }
