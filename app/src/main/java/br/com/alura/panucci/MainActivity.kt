@@ -18,7 +18,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.alura.panucci.sampledata.bottomAppBarItems
-import br.com.alura.panucci.sampledata.sampleProductWithImage
 import br.com.alura.panucci.sampledata.sampleProducts
 import br.com.alura.panucci.ui.components.BottomAppBarItem
 import br.com.alura.panucci.ui.components.PanucciBottomAppBar
@@ -38,10 +37,6 @@ class MainActivity : ComponentActivity() {
                 mutableStateListOf(initialScreen)
             }
 
-            LaunchedEffect(Unit){
-                delay(3000L)
-                navController.navigate("menu")
-            }
             Log.i("MainActivity", "onCreate: screens ${screens.toList()}")
 
             BackHandler(screens.size > 1) {
@@ -60,18 +55,15 @@ class MainActivity : ComponentActivity() {
                         bottomAppBarItemSelected = selectedItem,
                         onBottomAppBarItemSelectedChange = {
                             selectedItem = it
-                            screens.add(it.label)
+                            navController.navigate(it.route)
                         },
                         onFabClick = {
                             screens.add("Pedido")
                         }) {
-                        NavHost(navController = navController, startDestination = "home" ){
-                            composable("home"){
-                                HighlightsListScreen(products = sampleProducts)
-
-                            }
-
+                        NavHost(navController = navController, startDestination = "highlights" ){
+                            composable("highlights"){HighlightsListScreen(products = sampleProducts)}
                             composable("menu"){ MenuListScreen(products = sampleProducts) }
+                            composable("drinks"){ DrinksListScreen(products = sampleProducts) }
                         }
                     }
                 }
