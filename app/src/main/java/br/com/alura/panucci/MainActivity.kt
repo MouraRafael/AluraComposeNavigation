@@ -50,10 +50,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val selectedItem by remember(currentDestination) {
-                        val item = currentDestination?.let {destination ->
+                        val item = currentDestination?.let { destination ->
 
                             bottomAppBarItems.find { it.route == destination.route }
-                        }?:bottomAppBarItems.first()
+                        } ?: bottomAppBarItems.first()
 
                         mutableStateOf(item)
                     }
