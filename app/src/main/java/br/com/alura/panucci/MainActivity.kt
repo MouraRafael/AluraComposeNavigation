@@ -24,6 +24,7 @@ import br.com.alura.panucci.ui.components.BottomAppBarItem
 import br.com.alura.panucci.ui.components.PanucciBottomAppBar
 import br.com.alura.panucci.ui.screens.*
 import br.com.alura.panucci.ui.theme.PanucciTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
 
@@ -60,7 +61,14 @@ class MainActivity : ComponentActivity() {
                             screens.add("Pedido")
                         }) {
                         NavHost(navController = navController, startDestination = "home" ){
-                            composable("home"){ HighlightsListScreen(products = sampleProducts)}
+                            composable("home"){
+                                HighlightsListScreen(products = sampleProducts)
+                                LaunchedEffect(Unit){
+                                    delay(3000L)
+                                    navController.navigate("menu")
+                                }
+                            }
+
                             composable("menu"){ MenuListScreen(products = sampleProducts) }
                         }
                     }
