@@ -14,6 +14,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.alura.panucci.sampledata.bottomAppBarItems
 import br.com.alura.panucci.sampledata.sampleProductWithImage
@@ -35,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 mutableStateListOf(initialScreen)
             }
             Log.i("MainActivity", "onCreate: screens ${screens.toList()}")
-            val currentScreen = screens.last()
+
             BackHandler(screens.size > 1) {
                 screens.removeLast()
             }
@@ -44,12 +46,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var selectedItem by remember(currentScreen) {
-                        val item = bottomAppBarItems.find { currentScreen == it.label }
+                    var selectedItem by remember {
+                        val item = bottomAppBarItems.first()
                         mutableStateOf(item)
                     }
                     PanucciApp(
-                        bottomAppBarItemSelected = selectedItem ?: bottomAppBarItems.first(),
+                        bottomAppBarItemSelected = selectedItem,
                         onBottomAppBarItemSelectedChange = {
                             selectedItem = it
                             screens.add(it.label)
@@ -57,7 +59,10 @@ class MainActivity : ComponentActivity() {
                         onFabClick = {
                             screens.add("Pedido")
                         }) {
-                        //TODO
+                        NavHost(navController = navController, startDestination = "home" ){
+                            composable("home"){ HighlightsListScreen(products = sampleProducts)}
+                            composable("menu"){ MenuListScreen(products = sampleProducts) }
+                        }
                     }
                 }
             }
