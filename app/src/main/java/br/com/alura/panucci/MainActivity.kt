@@ -1,9 +1,7 @@
 package br.com.alura.panucci
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -40,16 +37,7 @@ class MainActivity : ComponentActivity() {
                 println(routes)
             }
 
-            val initialScreen = "Destaques"
-            val screens = remember {
-                mutableStateListOf(initialScreen)
-            }
 
-            Log.i("MainActivity", "onCreate: screens ${screens.toList()}")
-
-            BackHandler(screens.size > 1) {
-                screens.removeLast()
-            }
             PanucciTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -70,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             navController.navigate(it.route)
                         },
                         onFabClick = {
-                            screens.add("Pedido")
+
                         }) {
                         NavHost(navController = navController, startDestination = "highlights") {
                             composable("highlights") { HighlightsListScreen(products = sampleProducts) }
