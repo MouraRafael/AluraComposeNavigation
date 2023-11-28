@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
                                 HighlightsListScreen(
                                     products = sampleProducts,
                                     onNavigateToDetails = {
-                                        navController.navigate(AppDestinations.ProductDetails.route)
+                                        navController.navigate("${AppDestinations.ProductDetails.route}/navId")
                                     },
                                     onNavigateToCheckout = {
                                         navController.navigate(AppDestinations.Checkout.route)
@@ -113,7 +113,9 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            composable(AppDestinations.ProductDetails.route) {
+                            composable("${AppDestinations.ProductDetails.route}/{productId}") {backStackEntry ->
+                                val id = backStackEntry.arguments?.getString("productId")
+                                println(id)
                                 ProductDetailsScreen(
                                     product = sampleProducts.random(),
                                     onNavigateToCheckout = {
