@@ -24,7 +24,7 @@ val sampleProductWithoutImage = Product(
 val sampleProducts = List(10) { index ->
     Product(
         name = loremName,
-        price = BigDecimal("9.99"),
+        price = BigDecimal("${Random.nextInt(0,99)}.${Random.nextInt(0,99)}"),
         description = loremDesc,
         image = if (index % 2 == 0) "https://picsum.photos/1920/1080" else null
     )
