@@ -142,12 +142,15 @@ class MainActivity : ComponentActivity() {
                                             navController.navigate(AppDestinations.Checkout.route)
                                         }
                                     )
-                                }
+                                }?: LaunchedEffect(Unit){navController.popBackStack()}
 
                             }
                             composable(AppDestinations.Checkout.route) {
                                 CheckoutScreen(
-                                    products = sampleProducts
+                                    products = sampleProducts,
+                                    onPopBackStack = {
+                                        navController.navigateUp()
+                                    }
                                 )
                             }
                         }
