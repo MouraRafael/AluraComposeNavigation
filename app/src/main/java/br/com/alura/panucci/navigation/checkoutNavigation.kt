@@ -1,13 +1,16 @@
 package br.com.alura.panucci.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import br.com.alura.panucci.sampledata.sampleProducts
 import br.com.alura.panucci.ui.screens.CheckoutScreen
 
+
+private const val checkoutRoute = "checkout"
 fun NavGraphBuilder.productCheckoutScreen(navController: NavHostController) {
-    composable(AppDestinations.Checkout.route) {
+    composable(checkoutRoute) {
         CheckoutScreen(
             products = sampleProducts,
             onPopBackStack = {
@@ -17,3 +20,6 @@ fun NavGraphBuilder.productCheckoutScreen(navController: NavHostController) {
     }
 }
 
+fun NavController.navigateToCheckout(){
+    navigate(checkoutRoute)
+}

@@ -1,5 +1,6 @@
 package br.com.alura.panucci.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -8,18 +9,23 @@ import br.com.alura.panucci.sampledata.sampleProducts
 import br.com.alura.panucci.ui.screens.HighlightsListScreen
 
 
+internal const val highlightListRoute = "highlights"
 fun NavGraphBuilder.highlightsListScreen(navController: NavHostController) {
-    composable(AppDestinations.Highlights.route) {
+    composable(highlightListRoute) {
         HighlightsListScreen(
             products = sampleProducts,
             onNavigateToDetails = { p: Product ->
                 val promoCode = "ALURA"
-                navController.navigate("${AppDestinations.ProductDetails.route}/${p.id}?promoCode=${promoCode}")
+                navController.navigateToDetails("${p.id}?promoCode=${promoCode}")
             },
             onNavigateToCheckout = {
-                navController.navigate(AppDestinations.Checkout.route)
+                navController.navigateToCheckout()
             },
 
             )
     }
+}
+
+fun NavController.navigateToHighLights(){
+    navigate(highlightListRoute)
 }
