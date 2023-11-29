@@ -8,7 +8,7 @@ import br.com.alura.panucci.model.Product
 import br.com.alura.panucci.sampledata.sampleProducts
 import br.com.alura.panucci.ui.screens.DrinksListScreen
 
-private const val drinksRoute = "drinks"
+internal const val drinksRoute = "drinks"
 fun NavGraphBuilder.drinksScreen(navController: NavHostController) {
     composable(drinksRoute) {
         DrinksListScreen(
