@@ -1,6 +1,7 @@
 package br.com.alura.panucci.navigation
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -9,9 +10,11 @@ import br.com.alura.panucci.sampledata.sampleProducts
 import br.com.alura.panucci.ui.screens.ProductDetailsScreen
 import java.math.BigDecimal
 
+
+private const val productDetailsRoute = "productDetails"
 fun NavGraphBuilder.productDetailsScreen(navController: NavHostController) {
     composable(
-        "${AppDestinations.ProductDetails.route}/{productId}?promoCode={promoCode}",
+        "$productDetailsRoute/{productId}?promoCode={promoCode}",
         arguments = listOf(navArgument("promoCode") { nullable = true })
     ) { backStackEntry ->
         val id = backStackEntry.arguments?.getString("productId")
@@ -32,10 +35,14 @@ fun NavGraphBuilder.productDetailsScreen(navController: NavHostController) {
             ProductDetailsScreen(
                 product = product.copy(price = currentPrice - (currentPrice * discount)),
                 onNavigateToCheckout = {
-                    navController.navigate(AppDestinations.Checkout.route)
+                    navController.navigateToCheckout()
                 }
             )
         } ?: LaunchedEffect(Unit) { navController.popBackStack() }
 
     }
+}
+
+fun NavController.navigateToDetails(id:String){
+    navigate("$productDetailsRoute/$id")
 }
