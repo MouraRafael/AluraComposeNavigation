@@ -3,7 +3,6 @@ package br.com.alura.panucci.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import br.com.alura.panucci.ui.components.BottomAppBarItem
 
 @Composable
 fun PanucchiNavHost(navController:NavHostController) {
@@ -28,11 +27,7 @@ fun PanucchiNavHost(navController:NavHostController) {
 
 
 
-val bottomAppBarItems = listOf(
-   BottomAppBarItem.HighLights,
-    BottomAppBarItem.Menu,
-    BottomAppBarItem.Drinks
-)
+
 
 
 
