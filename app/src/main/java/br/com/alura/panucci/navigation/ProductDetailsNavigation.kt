@@ -1,14 +1,16 @@
 package br.com.alura.panucci.navigation
 
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import br.com.alura.panucci.sampledata.sampleProducts
 import br.com.alura.panucci.ui.screens.ProductDetailsScreen
-import java.math.BigDecimal
+import br.com.alura.panucci.ui.viewmodels.ProductDetailsViewModel
 
 
 private const val productDetailsRoute = "productDetails"
@@ -17,28 +19,36 @@ fun NavGraphBuilder.productDetailsScreen(navController: NavHostController) {
         "$productDetailsRoute/{productId}?promoCode={promoCode}",
         arguments = listOf(navArgument("promoCode") { nullable = true })
     ) { backStackEntry ->
-        val id = backStackEntry.arguments?.getString("productId")
-        println(id)
+        backStackEntry.arguments?.getString("productId")?.let {id->
+            val promoCode = backStackEntry.arguments?.getString("promoCode") != null
 
-        val promoCode = backStackEntry.arguments?.getString("promoCode")
+            val viewmodel = viewModel<ProductDetailsViewModel>()
+            val uiState by viewmodel.uiState.collectAsState()
 
-
-
-        sampleProducts.find { id == it.id }?.let { product ->
-
-            val discount = when (promoCode) {
-                "ALURA" -> BigDecimal("0.1")
-                else -> BigDecimal.ZERO
+            LaunchedEffect(Unit){
+                viewmodel.findProductById(id,promoCode)
             }
-            val currentPrice = product.price
 
             ProductDetailsScreen(
-                product = product.copy(price = currentPrice - (currentPrice * discount)),
+                uiState = uiState,
                 onNavigateToCheckout = {
                     navController.navigateToCheckout()
                 }
             )
-        } ?: LaunchedEffect(Unit) { navController.popBackStack() }
+
+
+
+        }?: LaunchedEffect(Unit) { navController.popBackStack() }
+
+
+
+
+
+
+
+
+
+
 
     }
 }
