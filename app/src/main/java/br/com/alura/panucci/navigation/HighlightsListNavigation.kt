@@ -22,7 +22,7 @@ fun NavGraphBuilder.highlightsListScreen(navController: NavHostController) {
             uiState = uiState,
             onNavigateToDetails = { p: Product ->
                 val promoCode = "ALURA"
-                navController.navigateToDetails("${p.id}?promoCode=${promoCode}")
+                navController.navigateToDetails("${p.price.toPlainString()}?promoCode=${promoCode}")
             },
             onNavigateToCheckout = {
                 navController.navigateToCheckout()
